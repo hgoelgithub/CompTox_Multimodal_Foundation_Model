@@ -1,0 +1,711 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="d28" for="edge" attr.name="cosine_distance" attr.type="double" />
+  <key id="d27" for="edge" attr.name="concentration_uM" attr.type="double" />
+  <key id="d26" for="edge" attr.name="zscore" attr.type="double" />
+  <key id="d25" for="edge" attr.name="logAC50" attr.type="string" />
+  <key id="d24" for="edge" attr.name="hit_code" attr.type="long" />
+  <key id="d23" for="edge" attr.name="hitcall" attr.type="string" />
+  <key id="d22" for="edge" attr.name="weight" attr.type="double" />
+  <key id="d21" for="edge" attr.name="modality" attr.type="string" />
+  <key id="d20" for="edge" attr.name="relation" attr.type="string" />
+  <key id="d19" for="node" attr.name="source" attr.type="string" />
+  <key id="d18" for="node" attr.name="n_decrease" attr.type="string" />
+  <key id="d17" for="node" attr.name="n_increase" attr.type="string" />
+  <key id="d16" for="node" attr.name="n_active_metrics" attr.type="string" />
+  <key id="d15" for="node" attr.name="result_type" attr.type="string" />
+  <key id="d14" for="node" attr.name="endpoint_group" attr.type="string" />
+  <key id="d13" for="node" attr.name="concentration_uM" attr.type="double" />
+  <key id="d12" for="node" attr.name="zscore" attr.type="double" />
+  <key id="d11" for="node" attr.name="logAC50" attr.type="string" />
+  <key id="d10" for="node" attr.name="direction" attr.type="string" />
+  <key id="d9" for="node" attr.name="hit_code" attr.type="long" />
+  <key id="d8" for="node" attr.name="summary" attr.type="string" />
+  <key id="d7" for="node" attr.name="efficacy" attr.type="string" />
+  <key id="d6" for="node" attr.name="AC50_uM" attr.type="string" />
+  <key id="d5" for="node" attr.name="score" attr.type="double" />
+  <key id="d4" for="node" attr.name="inchi_key" attr.type="string" />
+  <key id="d3" for="node" attr.name="smiles" attr.type="string" />
+  <key id="d2" for="node" attr.name="DTXSID" attr.type="string" />
+  <key id="d1" for="node" attr.name="label" attr.type="string" />
+  <key id="d0" for="node" attr.name="node_type" attr.type="string" />
+  <graph edgedefault="undirected">
+    <node id="chemical::Permethrin">
+      <data key="d0">chemical</data>
+      <data key="d1">Permethrin</data>
+      <data key="d2">DTXSID8022292</data>
+    </node>
+    <node id="structure::Permethrin">
+      <data key="d0">structure</data>
+      <data key="d1">Structure</data>
+      <data key="d3">CC1(C)C(C=C(Cl)Cl)C1C(=O)OCc1cccc(Oc2ccccc2)c1</data>
+      <data key="d4" />
+    </node>
+    <node id="super_class::Lipids and lipid-like molecules">
+      <data key="d0">super_class</data>
+      <data key="d1">Lipids and lipid-like molecules</data>
+    </node>
+    <node id="class::Fatty Acyls">
+      <data key="d0">class</data>
+      <data key="d1">Fatty Acyls</data>
+    </node>
+    <node id="lit::Na channel">
+      <data key="d0">literature_target</data>
+      <data key="d1">Na channel</data>
+    </node>
+    <node id="lit::Na channel modifier">
+      <data key="d0">literature_target</data>
+      <data key="d1">Na channel modifier</data>
+    </node>
+    <node id="pred::PPARD">
+      <data key="d0">predicted_target</data>
+      <data key="d1">PPARD</data>
+      <data key="d5">1.91</data>
+    </node>
+    <node id="pred::ACHE">
+      <data key="d0">predicted_target</data>
+      <data key="d1">ACHE</data>
+      <data key="d5">1.91</data>
+    </node>
+    <node id="pred::NR1I3">
+      <data key="d0">predicted_target</data>
+      <data key="d1">NR1I3</data>
+      <data key="d5">1.91</data>
+    </node>
+    <node id="pred::NR1I2">
+      <data key="d0">predicted_target</data>
+      <data key="d1">NR1I2</data>
+      <data key="d5">1.91</data>
+    </node>
+    <node id="pred::ESR2">
+      <data key="d0">predicted_target</data>
+      <data key="d1">ESR2</data>
+      <data key="d5">1.91</data>
+    </node>
+    <node id="pred::ESR1">
+      <data key="d0">predicted_target</data>
+      <data key="d1">ESR1</data>
+      <data key="d5">1.91</data>
+    </node>
+    <node id="pred::CHRM1">
+      <data key="d0">predicted_target</data>
+      <data key="d1">CHRM1</data>
+      <data key="d5">1.91</data>
+    </node>
+    <node id="pred::CHRM2">
+      <data key="d0">predicted_target</data>
+      <data key="d1">CHRM2</data>
+      <data key="d5">1.91</data>
+    </node>
+    <node id="pred::CHRM3">
+      <data key="d0">predicted_target</data>
+      <data key="d1">CHRM3</data>
+      <data key="d5">1.91</data>
+    </node>
+    <node id="pred::CNR1">
+      <data key="d0">predicted_target</data>
+      <data key="d1">CNR1</data>
+      <data key="d5">1.91</data>
+    </node>
+    <node id="pred::AHR">
+      <data key="d0">predicted_target</data>
+      <data key="d1">AHR</data>
+      <data key="d5">1.91</data>
+    </node>
+    <node id="pred::GABRA1">
+      <data key="d0">predicted_target</data>
+      <data key="d1">GABRA1</data>
+      <data key="d5">1.91</data>
+    </node>
+    <node id="toxcast::BSK::BSK_3C_Thrombomodulin">
+      <data key="d0">toxcast_tox21_assay</data>
+      <data key="d1">BSK
+BSK_3C_Thrombomodulin</data>
+      <data key="d6">0.1480000083440031</data>
+      <data key="d7">0.0669337992840035</data>
+    </node>
+    <node id="toxcast::BSK::BSK_LPS_PGE2">
+      <data key="d0">toxcast_tox21_assay</data>
+      <data key="d1">BSK
+BSK_LPS_PGE2</data>
+      <data key="d6">4.12511996758469</data>
+      <data key="d7">-0.1926841295210778</data>
+    </node>
+    <node id="toxcast::BSK::BSK_hDFCGF_CollagenIII">
+      <data key="d0">toxcast_tox21_assay</data>
+      <data key="d1">BSK
+BSK_hDFCGF_CollagenIII</data>
+      <data key="d6">4.1950159360257215</data>
+      <data key="d7">-0.2749630703709776</data>
+    </node>
+    <node id="toxcast::BSK::BSK_3C_Proliferation">
+      <data key="d0">toxcast_tox21_assay</data>
+      <data key="d1">BSK
+BSK_3C_Proliferation</data>
+      <data key="d6">4.288910014618217</data>
+      <data key="d7">-0.1782578502060265</data>
+    </node>
+    <node id="toxcast::BSK::BSK_LPS_MCSF">
+      <data key="d0">toxcast_tox21_assay</data>
+      <data key="d1">BSK
+BSK_LPS_MCSF</data>
+      <data key="d6">4.6275468232951615</data>
+      <data key="d7">-0.1124310774518874</data>
+    </node>
+    <node id="toxcast::TOX21::TOX21_CAR_LUC_Agonist">
+      <data key="d0">toxcast_tox21_assay</data>
+      <data key="d1">TOX21
+TOX21_CAR_LUC_Agonist</data>
+      <data key="d6">4.690609615059504</data>
+      <data key="d7">62.72052019719598</data>
+    </node>
+    <node id="toxcast::BSK::BSK_SAg_SRB">
+      <data key="d0">toxcast_tox21_assay</data>
+      <data key="d1">BSK
+BSK_SAg_SRB</data>
+      <data key="d6">5.103127015571535</data>
+      <data key="d7">-0.1310967902420081</data>
+    </node>
+    <node id="toxcast::BSK::BSK_LPS_SRB">
+      <data key="d0">toxcast_tox21_assay</data>
+      <data key="d1">BSK
+BSK_LPS_SRB</data>
+      <data key="d6">5.150970005417405</data>
+      <data key="d7">-0.1535119563447984</data>
+    </node>
+    <node id="toxcast::BSK::BSK_3C_SRB">
+      <data key="d0">toxcast_tox21_assay</data>
+      <data key="d1">BSK
+BSK_3C_SRB</data>
+      <data key="d6">6.056835362422341</data>
+      <data key="d7">-0.2421625813604488</data>
+    </node>
+    <node id="toxcast::BSK::BSK_SAg_PBMCCytotoxicity">
+      <data key="d0">toxcast_tox21_assay</data>
+      <data key="d1">BSK
+BSK_SAg_PBMCCytotoxicity</data>
+      <data key="d6">6.119200095360346</data>
+      <data key="d7">0.0966947304064234</data>
+    </node>
+    <node id="toxcast::BSK::BSK_CASM3C_IL6">
+      <data key="d0">toxcast_tox21_assay</data>
+      <data key="d1">BSK
+BSK_CASM3C_IL6</data>
+      <data key="d6">6.25846764816939</data>
+      <data key="d7">0.1607781928272124</data>
+    </node>
+    <node id="toxcast::BSK::BSK_3C_HLADR">
+      <data key="d0">toxcast_tox21_assay</data>
+      <data key="d1">BSK
+BSK_3C_HLADR</data>
+      <data key="d6">7.110904080637098</data>
+      <data key="d7">-0.1278973480770066</data>
+    </node>
+    <node id="toxcast::BSK::BSK_hDFCGF_Proliferation">
+      <data key="d0">toxcast_tox21_assay</data>
+      <data key="d1">BSK
+BSK_hDFCGF_Proliferation</data>
+      <data key="d6">7.383887183381691</data>
+      <data key="d7">-0.2015412166444119</data>
+    </node>
+    <node id="toxcast::BSK::BSK_LPS_IL8">
+      <data key="d0">toxcast_tox21_assay</data>
+      <data key="d1">BSK
+BSK_LPS_IL8</data>
+      <data key="d6">7.428540716291278</data>
+      <data key="d7">-0.1095829763095092</data>
+    </node>
+    <node id="toxcast::BSK::BSK_hDFCGF_EGFR">
+      <data key="d0">toxcast_tox21_assay</data>
+      <data key="d1">BSK
+BSK_hDFCGF_EGFR</data>
+      <data key="d6">7.614947346938267</data>
+      <data key="d7">-0.1286581588606118</data>
+    </node>
+    <node id="context::hazard">
+      <data key="d0">hazard_context</data>
+      <data key="d1">Hazard context</data>
+      <data key="d8">{'status': 'ok', 'n_records': 214, 'records': [{'metric': 'MRL', 'value': 0.3, 'units': 'mg/kg-day', 'study_type': 'Toxicity Value', 'species': None, 'source': 'ATSDR MRLs'}, {'metric': 'MRL', 'value': 0.2, 'units': 'mg/kg-day', 'study_type': 'Toxicity Value', 'species': None, 'source': 'ATSDR MRLs'}, {'metric': 'NOAEL', 'value': 25.0, 'units': 'mg/kg-day', 'study_type': 'acute', 'species': None, 'source': 'ATSDR MRLs'}, {'metric': 'NOAEL', 'value': 15.5, 'units': 'mg/kg-day', 'study_type': 'subchronic', 'species': None, 'source': 'ATSDR MRLs'}, {'metric': 'Drinking Water Guideline', 'value': 0.2, 'units': 'mg/L', 'study_type': 'Media Exposure Guidelines', 'species': None, 'source': 'AU DWG'}, {'metric': 'NOEL', 'value': 5.0, 'units': 'mg/kg-day', 'study_type': 'chronic', 'species': None, 'source': 'AU DWG'}, {'metric': 'LD50', 'value': 4000.0, 'units': 'mg/kg', 'study_type': 'acute', 'species': None, 'source': 'ChemIDplus'}, {'metric': 'LC50', 'value': 0.685, 'units': 'mg/L', 'study_type': 'acute', 'species': None, 'source': 'ChemIDplus'}, {'metric': 'LD50', 'value': 424.0, 'units': 'mg/kg', 'study_type': 'acute', 'species': None, 'source': 'ChemIDplus'}, {'metric': 'LD50', 'value': 10000.0, 'units': 'mg/kg', 'study_type': 'acute', 'species': None, 'source': 'ChemIDplus'}, {'metric': 'LD50', 'value': 2000.0, 'units': 'mg/kg', 'study_type': 'acute', 'species': None, 'source': 'ChemIDplus'}, {'metric': 'LC50', 'value': 0.485, 'units': 'mg/L', 'study_type': 'acute', 'species': None, 'source': 'ChemIDplus'}, {'metric': 'LD50', 'value': 383.0, 'units': 'mg/kg', 'study_type': 'acute', 'species': None, 'source': 'ChemIDplus'}, {'metric': 'LD50', 'value': 1750.0, 'units': 'mg/kg', 'study_type': 'acute', 'species': None, 'source': 'ChemIDplus'}, {'metric': 'MEG', 'value': 42400.0, 'units': 'mg/kg', 'study_type': 'Media Exposure Guidelines', 'species': None, 'source': 'DOD'}, {'metric': 'MEG', 'value': 1.4, 'units': 'mg/L', 'study_type': 'Media Exposure Guidelines', 'species': None, 'source': 'DOD'}, {'metric': 'MEG', 'value': 4.2, 'units': 'mg/L', 'study_type': 'Media Exposure Guidelines', 'species': None, 'source': 'DOD'}, {'metric': 'MEG', 'value': 2.8, 'units': 'mg/L', 'study_type': 'Media Exposure Guidelines', 'species': None, 'source': 'DOD'}, {'metric': 'NOEL', 'value': 150.0, 'units': 'mg/kg-day', 'study_type': 'subchronic', 'species': None, 'source': 'ECOTOX'}, {'metric': 'LOEL', 'value': 150.0, 'units': 'mg/kg-day', 'study_type': 'subchronic', 'species': None, 'source': 'ECOTOX'}]}</data>
+    </node>
+    <node id="context::exposure">
+      <data key="d0">exposure_context</data>
+      <data key="d1">Exposure context</data>
+      <data key="d8">{'status': 'ok', 'n_records': 2, 'product_count': 0, 'top_use_categories': {'Biocide': 1}}</data>
+    </node>
+    <node id="mea::Median ISI within Burst - Avg (sec)">
+      <data key="d0">mea_metric</data>
+      <data key="d1">Median ISI within Burst - Avg (sec)</data>
+      <data key="d9">2</data>
+      <data key="d10">decrease</data>
+      <data key="d11">0.2570376575487689</data>
+    </node>
+    <node id="mea::Network IBI Coefficient of Variation">
+      <data key="d0">mea_metric</data>
+      <data key="d1">Network IBI Coefficient of Variation</data>
+      <data key="d9">2</data>
+      <data key="d10">decrease</data>
+      <data key="d11">0.5049184676658921</data>
+    </node>
+    <node id="mea::Synchrony Index">
+      <data key="d0">mea_metric</data>
+      <data key="d1">Synchrony Index</data>
+      <data key="d9">1</data>
+      <data key="d10">increase</data>
+      <data key="d11">-1.9999999857694164</data>
+    </node>
+    <node id="mea::Number of Spikes per Network Burst - Median">
+      <data key="d0">mea_metric</data>
+      <data key="d1">Number of Spikes per Network Burst - Median</data>
+      <data key="d9">1</data>
+      <data key="d10">increase</data>
+      <data key="d11">-0.3142290357921439</data>
+    </node>
+    <node id="mea::Network Burst Percentage">
+      <data key="d0">mea_metric</data>
+      <data key="d1">Network Burst Percentage</data>
+      <data key="d9">1</data>
+      <data key="d10">increase</data>
+      <data key="d11">-0.2615492780751348</data>
+    </node>
+    <node id="mea::Number of Spikes per Burst (Median) - Avg">
+      <data key="d0">mea_metric</data>
+      <data key="d1">Number of Spikes per Burst (Median) - Avg</data>
+      <data key="d9">1</data>
+      <data key="d10">increase</data>
+      <data key="d11">-0.0992735774894238</data>
+    </node>
+    <node id="mea::Fano Factor">
+      <data key="d0">mea_metric</data>
+      <data key="d1">Fano Factor</data>
+      <data key="d9">1</data>
+      <data key="d10">increase</data>
+      <data key="d11">0.0337632412618658</data>
+    </node>
+    <node id="mea::ISI Coefficient of Variation - Avg">
+      <data key="d0">mea_metric</data>
+      <data key="d1">ISI Coefficient of Variation - Avg</data>
+      <data key="d9">1</data>
+      <data key="d10">increase</data>
+      <data key="d11">0.2417034073439744</data>
+    </node>
+    <node id="mea::Number of Network Bursts">
+      <data key="d0">mea_metric</data>
+      <data key="d1">Number of Network Bursts</data>
+      <data key="d9">1</data>
+      <data key="d10">increase</data>
+      <data key="d11">0.3366979500552188</data>
+    </node>
+    <node id="mea::Burst Duration (Median) - Avg (sec)">
+      <data key="d0">mea_metric</data>
+      <data key="d1">Burst Duration (Median) - Avg (sec)</data>
+      <data key="d9">1</data>
+      <data key="d10">increase</data>
+      <data key="d11">0.3684718073164811</data>
+    </node>
+    <node id="mea::Burst Percentage - Avg">
+      <data key="d0">mea_metric</data>
+      <data key="d1">Burst Percentage - Avg</data>
+      <data key="d9">1</data>
+      <data key="d10">increase</data>
+      <data key="d11">0.5350731778427409</data>
+    </node>
+    <node id="mea::Network Burst Duration - Median (sec)">
+      <data key="d0">mea_metric</data>
+      <data key="d1">Network Burst Duration - Median (sec)</data>
+      <data key="d9">1</data>
+      <data key="d10">increase</data>
+      <data key="d11">0.935351692084994</data>
+    </node>
+    <node id="zscore::Median ISI within Network Burst - Avg (sec)">
+      <data key="d0">zscore_response</data>
+      <data key="d1">Median ISI within Network Burst - Avg (sec)</data>
+      <data key="d12">54.10348173</data>
+      <data key="d13">30.0</data>
+    </node>
+    <node id="zscore::Number of Elecs Participating in Burst - Median">
+      <data key="d0">zscore_response</data>
+      <data key="d1">Number of Elecs Participating in Burst - Median</data>
+      <data key="d12">-25.4020915</data>
+      <data key="d13">30.0</data>
+    </node>
+    <node id="zscore::Network IBI Coefficient of Variation">
+      <data key="d0">zscore_response</data>
+      <data key="d1">Network IBI Coefficient of Variation</data>
+      <data key="d12">15.17981813</data>
+      <data key="d13">10.0</data>
+    </node>
+    <node id="zscore::Number of Spikes">
+      <data key="d0">zscore_response</data>
+      <data key="d1">Number of Spikes</data>
+      <data key="d12">-14.68122866</data>
+      <data key="d13">30.0</data>
+    </node>
+    <node id="zscore::Number of Spikes per Burst (Median) - Avg">
+      <data key="d0">zscore_response</data>
+      <data key="d1">Number of Spikes per Burst (Median) - Avg</data>
+      <data key="d12">-14.04954331</data>
+      <data key="d13">30.0</data>
+    </node>
+    <node id="zscore::Area Under Normalized Cross-Correlation">
+      <data key="d0">zscore_response</data>
+      <data key="d1">Area Under Normalized Cross-Correlation</data>
+      <data key="d12">-10.99947025</data>
+      <data key="d13">3.0</data>
+    </node>
+    <node id="zscore::ISI Coefficient of Variation - Avg">
+      <data key="d0">zscore_response</data>
+      <data key="d1">ISI Coefficient of Variation - Avg</data>
+      <data key="d12">-10.20940889</data>
+      <data key="d13">30.0</data>
+    </node>
+    <node id="zscore::Number of Spikes per Network Burst - Median">
+      <data key="d0">zscore_response</data>
+      <data key="d1">Number of Spikes per Network Burst - Median</data>
+      <data key="d12">-9.501920928</data>
+      <data key="d13">30.0</data>
+    </node>
+    <node id="toxendpoint::0::MEA neurotoxicity phenotype">
+      <data key="d0">toxicity_endpoint</data>
+      <data key="d1">MEA neurotoxicity phenotype
+MEA activity profile</data>
+      <data key="d14">neurotoxicity</data>
+      <data key="d15">experimental</data>
+      <data key="d16">14</data>
+      <data key="d17">12</data>
+      <data key="d18">2</data>
+      <data key="d19">uploaded MEA workbook</data>
+    </node>
+    <node id="embedding_neighbor::DTXSID5035957">
+      <data key="d0">embedding_neighbor</data>
+      <data key="d1">DTXSID5035957</data>
+    </node>
+    <node id="embedding_neighbor::DTXSID1023998">
+      <data key="d0">embedding_neighbor</data>
+      <data key="d1">DTXSID1023998</data>
+    </node>
+    <node id="embedding_neighbor::DTXSID8020381">
+      <data key="d0">embedding_neighbor</data>
+      <data key="d1">DTXSID8020381</data>
+    </node>
+    <node id="embedding_neighbor::DTXSID4020791">
+      <data key="d0">embedding_neighbor</data>
+      <data key="d1">DTXSID4020791</data>
+    </node>
+    <node id="embedding_neighbor::DTXSID9020112">
+      <data key="d0">embedding_neighbor</data>
+      <data key="d1">DTXSID9020112</data>
+    </node>
+    <edge source="chemical::Permethrin" target="structure::Permethrin" id="e0">
+      <data key="d20">has_structure</data>
+      <data key="d21">structure</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="super_class::Lipids and lipid-like molecules" id="e1">
+      <data key="d20">belongs_to_super_class</data>
+      <data key="d21">chemistry</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="class::Fatty Acyls" id="e2">
+      <data key="d20">belongs_to_class</data>
+      <data key="d21">chemistry</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="lit::Na channel" id="e3">
+      <data key="d20">literature_support</data>
+      <data key="d21">literature</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="lit::Na channel modifier" id="e4">
+      <data key="d20">literature_support</data>
+      <data key="d21">literature</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="pred::PPARD" id="e5">
+      <data key="d20">ToxProfiler_prediction</data>
+      <data key="d21">predicted_biology</data>
+      <data key="d22">1.91</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="pred::ACHE" id="e6">
+      <data key="d20">ToxProfiler_prediction</data>
+      <data key="d21">predicted_biology</data>
+      <data key="d22">1.91</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="pred::NR1I3" id="e7">
+      <data key="d20">ToxProfiler_prediction</data>
+      <data key="d21">predicted_biology</data>
+      <data key="d22">1.91</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="pred::NR1I2" id="e8">
+      <data key="d20">ToxProfiler_prediction</data>
+      <data key="d21">predicted_biology</data>
+      <data key="d22">1.91</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="pred::ESR2" id="e9">
+      <data key="d20">ToxProfiler_prediction</data>
+      <data key="d21">predicted_biology</data>
+      <data key="d22">1.91</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="pred::ESR1" id="e10">
+      <data key="d20">ToxProfiler_prediction</data>
+      <data key="d21">predicted_biology</data>
+      <data key="d22">1.91</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="pred::CHRM1" id="e11">
+      <data key="d20">ToxProfiler_prediction</data>
+      <data key="d21">predicted_biology</data>
+      <data key="d22">1.91</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="pred::CHRM2" id="e12">
+      <data key="d20">ToxProfiler_prediction</data>
+      <data key="d21">predicted_biology</data>
+      <data key="d22">1.91</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="pred::CHRM3" id="e13">
+      <data key="d20">ToxProfiler_prediction</data>
+      <data key="d21">predicted_biology</data>
+      <data key="d22">1.91</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="pred::CNR1" id="e14">
+      <data key="d20">ToxProfiler_prediction</data>
+      <data key="d21">predicted_biology</data>
+      <data key="d22">1.91</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="pred::AHR" id="e15">
+      <data key="d20">ToxProfiler_prediction</data>
+      <data key="d21">predicted_biology</data>
+      <data key="d22">1.91</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="pred::GABRA1" id="e16">
+      <data key="d20">ToxProfiler_prediction</data>
+      <data key="d21">predicted_biology</data>
+      <data key="d22">1.91</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="toxcast::BSK::BSK_3C_Thrombomodulin" id="e17">
+      <data key="d20">active_bioassay</data>
+      <data key="d21">ToxCast_Tox21</data>
+      <data key="d23">1.0</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="toxcast::BSK::BSK_LPS_PGE2" id="e18">
+      <data key="d20">active_bioassay</data>
+      <data key="d21">ToxCast_Tox21</data>
+      <data key="d23">1.0</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="toxcast::BSK::BSK_hDFCGF_CollagenIII" id="e19">
+      <data key="d20">active_bioassay</data>
+      <data key="d21">ToxCast_Tox21</data>
+      <data key="d23">1.0</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="toxcast::BSK::BSK_3C_Proliferation" id="e20">
+      <data key="d20">active_bioassay</data>
+      <data key="d21">ToxCast_Tox21</data>
+      <data key="d23">1.0</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="toxcast::BSK::BSK_LPS_MCSF" id="e21">
+      <data key="d20">active_bioassay</data>
+      <data key="d21">ToxCast_Tox21</data>
+      <data key="d23">1.0</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="toxcast::TOX21::TOX21_CAR_LUC_Agonist" id="e22">
+      <data key="d20">active_bioassay</data>
+      <data key="d21">ToxCast_Tox21</data>
+      <data key="d23">1.0</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="toxcast::BSK::BSK_SAg_SRB" id="e23">
+      <data key="d20">active_bioassay</data>
+      <data key="d21">ToxCast_Tox21</data>
+      <data key="d23">1.0</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="toxcast::BSK::BSK_LPS_SRB" id="e24">
+      <data key="d20">active_bioassay</data>
+      <data key="d21">ToxCast_Tox21</data>
+      <data key="d23">1.0</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="toxcast::BSK::BSK_3C_SRB" id="e25">
+      <data key="d20">active_bioassay</data>
+      <data key="d21">ToxCast_Tox21</data>
+      <data key="d23">1.0</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="toxcast::BSK::BSK_SAg_PBMCCytotoxicity" id="e26">
+      <data key="d20">active_bioassay</data>
+      <data key="d21">ToxCast_Tox21</data>
+      <data key="d23">1.0</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="toxcast::BSK::BSK_CASM3C_IL6" id="e27">
+      <data key="d20">active_bioassay</data>
+      <data key="d21">ToxCast_Tox21</data>
+      <data key="d23">1.0</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="toxcast::BSK::BSK_3C_HLADR" id="e28">
+      <data key="d20">active_bioassay</data>
+      <data key="d21">ToxCast_Tox21</data>
+      <data key="d23">1.0</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="toxcast::BSK::BSK_hDFCGF_Proliferation" id="e29">
+      <data key="d20">active_bioassay</data>
+      <data key="d21">ToxCast_Tox21</data>
+      <data key="d23">1.0</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="toxcast::BSK::BSK_LPS_IL8" id="e30">
+      <data key="d20">active_bioassay</data>
+      <data key="d21">ToxCast_Tox21</data>
+      <data key="d23">1.0</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="toxcast::BSK::BSK_hDFCGF_EGFR" id="e31">
+      <data key="d20">active_bioassay</data>
+      <data key="d21">ToxCast_Tox21</data>
+      <data key="d23">1.0</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="context::hazard" id="e32">
+      <data key="d20">has_hazard_context</data>
+      <data key="d21">hazard</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="context::exposure" id="e33">
+      <data key="d20">has_exposure_context</data>
+      <data key="d21">exposure</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="mea::Median ISI within Burst - Avg (sec)" id="e34">
+      <data key="d20">MEA_decrease</data>
+      <data key="d21">MEA</data>
+      <data key="d24">2</data>
+      <data key="d25">0.2570376575487689</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="mea::Network IBI Coefficient of Variation" id="e35">
+      <data key="d20">MEA_decrease</data>
+      <data key="d21">MEA</data>
+      <data key="d24">2</data>
+      <data key="d25">0.5049184676658921</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="mea::Synchrony Index" id="e36">
+      <data key="d20">MEA_increase</data>
+      <data key="d21">MEA</data>
+      <data key="d24">1</data>
+      <data key="d25">-1.9999999857694164</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="mea::Number of Spikes per Network Burst - Median" id="e37">
+      <data key="d20">MEA_increase</data>
+      <data key="d21">MEA</data>
+      <data key="d24">1</data>
+      <data key="d25">-0.3142290357921439</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="mea::Network Burst Percentage" id="e38">
+      <data key="d20">MEA_increase</data>
+      <data key="d21">MEA</data>
+      <data key="d24">1</data>
+      <data key="d25">-0.2615492780751348</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="mea::Number of Spikes per Burst (Median) - Avg" id="e39">
+      <data key="d20">MEA_increase</data>
+      <data key="d21">MEA</data>
+      <data key="d24">1</data>
+      <data key="d25">-0.0992735774894238</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="mea::Fano Factor" id="e40">
+      <data key="d20">MEA_increase</data>
+      <data key="d21">MEA</data>
+      <data key="d24">1</data>
+      <data key="d25">0.0337632412618658</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="mea::ISI Coefficient of Variation - Avg" id="e41">
+      <data key="d20">MEA_increase</data>
+      <data key="d21">MEA</data>
+      <data key="d24">1</data>
+      <data key="d25">0.2417034073439744</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="mea::Number of Network Bursts" id="e42">
+      <data key="d20">MEA_increase</data>
+      <data key="d21">MEA</data>
+      <data key="d24">1</data>
+      <data key="d25">0.3366979500552188</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="mea::Burst Duration (Median) - Avg (sec)" id="e43">
+      <data key="d20">MEA_increase</data>
+      <data key="d21">MEA</data>
+      <data key="d24">1</data>
+      <data key="d25">0.3684718073164811</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="mea::Burst Percentage - Avg" id="e44">
+      <data key="d20">MEA_increase</data>
+      <data key="d21">MEA</data>
+      <data key="d24">1</data>
+      <data key="d25">0.5350731778427409</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="mea::Network Burst Duration - Median (sec)" id="e45">
+      <data key="d20">MEA_increase</data>
+      <data key="d21">MEA</data>
+      <data key="d24">1</data>
+      <data key="d25">0.935351692084994</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="zscore::Median ISI within Network Burst - Avg (sec)" id="e46">
+      <data key="d20">concentration_response</data>
+      <data key="d21">MEA_zscore</data>
+      <data key="d26">54.10348173</data>
+      <data key="d27">30.0</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="zscore::Number of Elecs Participating in Burst - Median" id="e47">
+      <data key="d20">concentration_response</data>
+      <data key="d21">MEA_zscore</data>
+      <data key="d26">-25.4020915</data>
+      <data key="d27">30.0</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="zscore::Network IBI Coefficient of Variation" id="e48">
+      <data key="d20">concentration_response</data>
+      <data key="d21">MEA_zscore</data>
+      <data key="d26">15.17981813</data>
+      <data key="d27">10.0</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="zscore::Number of Spikes" id="e49">
+      <data key="d20">concentration_response</data>
+      <data key="d21">MEA_zscore</data>
+      <data key="d26">-14.68122866</data>
+      <data key="d27">30.0</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="zscore::Number of Spikes per Burst (Median) - Avg" id="e50">
+      <data key="d20">concentration_response</data>
+      <data key="d21">MEA_zscore</data>
+      <data key="d26">-14.04954331</data>
+      <data key="d27">30.0</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="zscore::Area Under Normalized Cross-Correlation" id="e51">
+      <data key="d20">concentration_response</data>
+      <data key="d21">MEA_zscore</data>
+      <data key="d26">-10.99947025</data>
+      <data key="d27">3.0</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="zscore::ISI Coefficient of Variation - Avg" id="e52">
+      <data key="d20">concentration_response</data>
+      <data key="d21">MEA_zscore</data>
+      <data key="d26">-10.20940889</data>
+      <data key="d27">30.0</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="zscore::Number of Spikes per Network Burst - Median" id="e53">
+      <data key="d20">concentration_response</data>
+      <data key="d21">MEA_zscore</data>
+      <data key="d26">-9.501920928</data>
+      <data key="d27">30.0</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="toxendpoint::0::MEA neurotoxicity phenotype" id="e54">
+      <data key="d20">toxicity_or_injury_endpoint</data>
+      <data key="d21">downstream_endpoint</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="embedding_neighbor::DTXSID5035957" id="e55">
+      <data key="d20">foundation_embedding_neighbor</data>
+      <data key="d21">foundation_embedding</data>
+      <data key="d28">0.031174421310424805</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="embedding_neighbor::DTXSID1023998" id="e56">
+      <data key="d20">foundation_embedding_neighbor</data>
+      <data key="d21">foundation_embedding</data>
+      <data key="d28">0.05100524425506592</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="embedding_neighbor::DTXSID8020381" id="e57">
+      <data key="d20">foundation_embedding_neighbor</data>
+      <data key="d21">foundation_embedding</data>
+      <data key="d28">0.057709574699401855</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="embedding_neighbor::DTXSID4020791" id="e58">
+      <data key="d20">foundation_embedding_neighbor</data>
+      <data key="d21">foundation_embedding</data>
+      <data key="d28">0.0658307671546936</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="embedding_neighbor::DTXSID9020112" id="e59">
+      <data key="d20">foundation_embedding_neighbor</data>
+      <data key="d21">foundation_embedding</data>
+      <data key="d28">0.08011013269424438</data>
+    </edge>
+  </graph>
+</graphml>

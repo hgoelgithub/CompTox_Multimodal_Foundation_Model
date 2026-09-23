@@ -1,0 +1,609 @@
+{
+  "query": "Permethrin",
+  "status": "ok",
+  "preferred_name": "Permethrin",
+  "matched_compound_ids": [
+    "Permethrin_Y1P7"
+  ],
+  "base_compound_names": [
+    "Permethrin"
+  ],
+  "DTXSID": "DTXSID8022292",
+  "chemical_class": [
+    {
+      "super_class": "Lipids and lipid-like molecules",
+      "class": "Fatty Acyls"
+    }
+  ],
+  "literature_targets": [
+    "Na channel",
+    "Na channel modifier"
+  ],
+  "toxprofiler_top_targets": [
+    {
+      "target": "PPARD",
+      "score": 1.91
+    },
+    {
+      "target": "ACHE",
+      "score": 1.91
+    },
+    {
+      "target": "NR1I3",
+      "score": 1.91
+    },
+    {
+      "target": "NR1I2",
+      "score": 1.91
+    },
+    {
+      "target": "ESR2",
+      "score": 1.91
+    },
+    {
+      "target": "ESR1",
+      "score": 1.91
+    },
+    {
+      "target": "CHRM1",
+      "score": 1.91
+    },
+    {
+      "target": "CHRM2",
+      "score": 1.91
+    },
+    {
+      "target": "CHRM3",
+      "score": 1.91
+    },
+    {
+      "target": "CNR1",
+      "score": 1.91
+    },
+    {
+      "target": "AHR",
+      "score": 1.91
+    },
+    {
+      "target": "GABRA1",
+      "score": 1.91
+    }
+  ],
+  "mea_active_metrics": [
+    {
+      "metric": "Median ISI within Burst - Avg (sec)",
+      "hit_code": 2,
+      "direction": "decrease",
+      "logAC50": 0.2570376575487689
+    },
+    {
+      "metric": "Network IBI Coefficient of Variation",
+      "hit_code": 2,
+      "direction": "decrease",
+      "logAC50": 0.5049184676658921
+    },
+    {
+      "metric": "Synchrony Index",
+      "hit_code": 1,
+      "direction": "increase",
+      "logAC50": -1.9999999857694164
+    },
+    {
+      "metric": "Number of Spikes per Network Burst - Median",
+      "hit_code": 1,
+      "direction": "increase",
+      "logAC50": -0.3142290357921439
+    },
+    {
+      "metric": "Network Burst Percentage",
+      "hit_code": 1,
+      "direction": "increase",
+      "logAC50": -0.2615492780751348
+    },
+    {
+      "metric": "Number of Spikes per Burst (Median) - Avg",
+      "hit_code": 1,
+      "direction": "increase",
+      "logAC50": -0.0992735774894238
+    },
+    {
+      "metric": "Fano Factor",
+      "hit_code": 1,
+      "direction": "increase",
+      "logAC50": 0.0337632412618658
+    },
+    {
+      "metric": "ISI Coefficient of Variation - Avg",
+      "hit_code": 1,
+      "direction": "increase",
+      "logAC50": 0.2417034073439744
+    },
+    {
+      "metric": "Number of Network Bursts",
+      "hit_code": 1,
+      "direction": "increase",
+      "logAC50": 0.3366979500552188
+    },
+    {
+      "metric": "Burst Duration (Median) - Avg (sec)",
+      "hit_code": 1,
+      "direction": "increase",
+      "logAC50": 0.3684718073164811
+    },
+    {
+      "metric": "Burst Percentage - Avg",
+      "hit_code": 1,
+      "direction": "increase",
+      "logAC50": 0.5350731778427409
+    },
+    {
+      "metric": "Network Burst Duration - Median (sec)",
+      "hit_code": 1,
+      "direction": "increase",
+      "logAC50": 0.935351692084994
+    }
+  ],
+  "strongest_zscore_responses": [
+    {
+      "metric": "Median ISI within Network Burst - Avg (sec)",
+      "zscore": 54.10348173,
+      "concentration_uM": 30.0
+    },
+    {
+      "metric": "Number of Elecs Participating in Burst - Median",
+      "zscore": -25.4020915,
+      "concentration_uM": 30.0
+    },
+    {
+      "metric": "Network IBI Coefficient of Variation",
+      "zscore": 15.17981813,
+      "concentration_uM": 10.0
+    },
+    {
+      "metric": "Number of Spikes",
+      "zscore": -14.68122866,
+      "concentration_uM": 30.0
+    },
+    {
+      "metric": "Number of Spikes per Burst (Median) - Avg",
+      "zscore": -14.04954331,
+      "concentration_uM": 30.0
+    },
+    {
+      "metric": "Area Under Normalized Cross-Correlation",
+      "zscore": -10.99947025,
+      "concentration_uM": 3.0
+    },
+    {
+      "metric": "ISI Coefficient of Variation - Avg",
+      "zscore": -10.20940889,
+      "concentration_uM": 30.0
+    },
+    {
+      "metric": "Number of Spikes per Network Burst - Median",
+      "zscore": -9.501920928,
+      "concentration_uM": 30.0
+    },
+    {
+      "metric": "Number of Network Bursts",
+      "zscore": 8.928811344,
+      "concentration_uM": 10.0
+    },
+    {
+      "metric": "Number of Active Electrodes",
+      "zscore": -8.373767762,
+      "concentration_uM": 10.0
+    },
+    {
+      "metric": "Weighted Mean Firing Rate (Hz)",
+      "zscore": -7.299027586,
+      "concentration_uM": 30.0
+    },
+    {
+      "metric": "Burst Percentage - Avg",
+      "zscore": -6.935793175,
+      "concentration_uM": 30.0
+    }
+  ],
+  "structure": {
+    "compound_id": "Permethrin_Y1P7",
+    "base_compound_name": "Permethrin",
+    "DTXSID": "DTXSID8022292",
+    "SMILES": "CC1(C)C(C=C(Cl)Cl)C1C(=O)OCc1cccc(Oc2ccccc2)c1",
+    "source": "EPA DSSTox December 2025"
+  },
+  "toxcast_tox21": {
+    "status": "ok",
+    "source": "normalized_raw_bioactivity",
+    "DTXSID": "DTXSID8022292",
+    "n_measured_assays": 820,
+    "n_active_assays": 117,
+    "active_assays": [
+      {
+        "program": "BSK",
+        "assay": "BSK_3C_Thrombomodulin",
+        "hitcall": 1.0,
+        "AC50_uM": 0.1480000083440031,
+        "efficacy": 0.0669337992840035
+      },
+      {
+        "program": "BSK",
+        "assay": "BSK_LPS_PGE2",
+        "hitcall": 1.0,
+        "AC50_uM": 4.12511996758469,
+        "efficacy": -0.1926841295210778
+      },
+      {
+        "program": "BSK",
+        "assay": "BSK_hDFCGF_CollagenIII",
+        "hitcall": 1.0,
+        "AC50_uM": 4.1950159360257215,
+        "efficacy": -0.2749630703709776
+      },
+      {
+        "program": "BSK",
+        "assay": "BSK_3C_Proliferation",
+        "hitcall": 1.0,
+        "AC50_uM": 4.288910014618217,
+        "efficacy": -0.1782578502060265
+      },
+      {
+        "program": "BSK",
+        "assay": "BSK_LPS_MCSF",
+        "hitcall": 1.0,
+        "AC50_uM": 4.6275468232951615,
+        "efficacy": -0.1124310774518874
+      },
+      {
+        "program": "TOX21",
+        "assay": "TOX21_CAR_LUC_Agonist",
+        "hitcall": 1.0,
+        "AC50_uM": 4.690609615059504,
+        "efficacy": 62.72052019719598
+      },
+      {
+        "program": "BSK",
+        "assay": "BSK_SAg_SRB",
+        "hitcall": 1.0,
+        "AC50_uM": 5.103127015571535,
+        "efficacy": -0.1310967902420081
+      },
+      {
+        "program": "BSK",
+        "assay": "BSK_LPS_SRB",
+        "hitcall": 1.0,
+        "AC50_uM": 5.150970005417405,
+        "efficacy": -0.1535119563447984
+      },
+      {
+        "program": "BSK",
+        "assay": "BSK_3C_SRB",
+        "hitcall": 1.0,
+        "AC50_uM": 6.056835362422341,
+        "efficacy": -0.2421625813604488
+      },
+      {
+        "program": "BSK",
+        "assay": "BSK_SAg_PBMCCytotoxicity",
+        "hitcall": 1.0,
+        "AC50_uM": 6.119200095360346,
+        "efficacy": 0.0966947304064234
+      },
+      {
+        "program": "BSK",
+        "assay": "BSK_CASM3C_IL6",
+        "hitcall": 1.0,
+        "AC50_uM": 6.25846764816939,
+        "efficacy": 0.1607781928272124
+      },
+      {
+        "program": "BSK",
+        "assay": "BSK_3C_HLADR",
+        "hitcall": 1.0,
+        "AC50_uM": 7.110904080637098,
+        "efficacy": -0.1278973480770066
+      },
+      {
+        "program": "BSK",
+        "assay": "BSK_hDFCGF_Proliferation",
+        "hitcall": 1.0,
+        "AC50_uM": 7.383887183381691,
+        "efficacy": -0.2015412166444119
+      },
+      {
+        "program": "BSK",
+        "assay": "BSK_LPS_IL8",
+        "hitcall": 1.0,
+        "AC50_uM": 7.428540716291278,
+        "efficacy": -0.1095829763095092
+      },
+      {
+        "program": "BSK",
+        "assay": "BSK_hDFCGF_EGFR",
+        "hitcall": 1.0,
+        "AC50_uM": 7.614947346938267,
+        "efficacy": -0.1286581588606118
+      },
+      {
+        "program": "BSK",
+        "assay": "BSK_CASM3C_Thrombomodulin",
+        "hitcall": 1.0,
+        "AC50_uM": 10.010270926314044,
+        "efficacy": 0.2598191115745481
+      },
+      {
+        "program": "BSK",
+        "assay": "BSK_SAg_IL8",
+        "hitcall": 1.0,
+        "AC50_uM": 10.371299175745497,
+        "efficacy": -0.1710306185009567
+      },
+      {
+        "program": "BSK",
+        "assay": "BSK_SAg_Proliferation",
+        "hitcall": 1.0,
+        "AC50_uM": 13.902670398373234,
+        "efficacy": -0.5169814452182381
+      },
+      {
+        "program": "BSK",
+        "assay": "BSK_SAg_CD69",
+        "hitcall": 1.0,
+        "AC50_uM": 14.692038233373731,
+        "efficacy": -0.1489997367703923
+      },
+      {
+        "program": "BSK",
+        "assay": "BSK_3C_Vis",
+        "hitcall": 1.0,
+        "AC50_uM": 20.000000000000007,
+        "efficacy": -0.3107967283244566
+      },
+      {
+        "program": "BSK",
+        "assay": "BSK_SAg_CD38",
+        "hitcall": 1.0,
+        "AC50_uM": 20.000000000000007,
+        "efficacy": -0.0354106855443318
+      },
+      {
+        "program": "BSK",
+        "assay": "BSK_SAg_Eselectin",
+        "hitcall": 1.0,
+        "AC50_uM": 20.000000000000007,
+        "efficacy": -0.1148930082285049
+      },
+      {
+        "program": "BSK",
+        "assay": "BSK_CASM3C_Proliferation",
+        "hitcall": 1.0,
+        "AC50_uM": 35.56643983318027,
+        "efficacy": -0.1092589426821912
+      },
+      {
+        "program": "TOX21",
+        "assay": "TOX21_p450_CYP2C9_Antagonist",
+        "hitcall": 0.9999999999993964,
+        "AC50_uM": 7.926082851704158,
+        "efficacy": -80.132802373829
+      },
+      {
+        "program": "ATG",
+        "assay": "ATG_PXRE_CIS",
+        "hitcall": 0.9999999995369762,
+        "AC50_uM": 7.620364854777475,
+        "efficacy": 4.400002657426144
+      }
+    ]
+  },
+  "comptox_context": {
+    "hazard": {
+      "status": "ok",
+      "n_records": 214,
+      "records": [
+        {
+          "metric": "MRL",
+          "value": 0.3,
+          "units": "mg/kg-day",
+          "study_type": "Toxicity Value",
+          "species": null,
+          "source": "ATSDR MRLs"
+        },
+        {
+          "metric": "MRL",
+          "value": 0.2,
+          "units": "mg/kg-day",
+          "study_type": "Toxicity Value",
+          "species": null,
+          "source": "ATSDR MRLs"
+        },
+        {
+          "metric": "NOAEL",
+          "value": 25.0,
+          "units": "mg/kg-day",
+          "study_type": "acute",
+          "species": null,
+          "source": "ATSDR MRLs"
+        },
+        {
+          "metric": "NOAEL",
+          "value": 15.5,
+          "units": "mg/kg-day",
+          "study_type": "subchronic",
+          "species": null,
+          "source": "ATSDR MRLs"
+        },
+        {
+          "metric": "Drinking Water Guideline",
+          "value": 0.2,
+          "units": "mg/L",
+          "study_type": "Media Exposure Guidelines",
+          "species": null,
+          "source": "AU DWG"
+        },
+        {
+          "metric": "NOEL",
+          "value": 5.0,
+          "units": "mg/kg-day",
+          "study_type": "chronic",
+          "species": null,
+          "source": "AU DWG"
+        },
+        {
+          "metric": "LD50",
+          "value": 4000.0,
+          "units": "mg/kg",
+          "study_type": "acute",
+          "species": null,
+          "source": "ChemIDplus"
+        },
+        {
+          "metric": "LC50",
+          "value": 0.685,
+          "units": "mg/L",
+          "study_type": "acute",
+          "species": null,
+          "source": "ChemIDplus"
+        },
+        {
+          "metric": "LD50",
+          "value": 424.0,
+          "units": "mg/kg",
+          "study_type": "acute",
+          "species": null,
+          "source": "ChemIDplus"
+        },
+        {
+          "metric": "LD50",
+          "value": 10000.0,
+          "units": "mg/kg",
+          "study_type": "acute",
+          "species": null,
+          "source": "ChemIDplus"
+        },
+        {
+          "metric": "LD50",
+          "value": 2000.0,
+          "units": "mg/kg",
+          "study_type": "acute",
+          "species": null,
+          "source": "ChemIDplus"
+        },
+        {
+          "metric": "LC50",
+          "value": 0.485,
+          "units": "mg/L",
+          "study_type": "acute",
+          "species": null,
+          "source": "ChemIDplus"
+        },
+        {
+          "metric": "LD50",
+          "value": 383.0,
+          "units": "mg/kg",
+          "study_type": "acute",
+          "species": null,
+          "source": "ChemIDplus"
+        },
+        {
+          "metric": "LD50",
+          "value": 1750.0,
+          "units": "mg/kg",
+          "study_type": "acute",
+          "species": null,
+          "source": "ChemIDplus"
+        },
+        {
+          "metric": "MEG",
+          "value": 42400.0,
+          "units": "mg/kg",
+          "study_type": "Media Exposure Guidelines",
+          "species": null,
+          "source": "DOD"
+        },
+        {
+          "metric": "MEG",
+          "value": 1.4,
+          "units": "mg/L",
+          "study_type": "Media Exposure Guidelines",
+          "species": null,
+          "source": "DOD"
+        },
+        {
+          "metric": "MEG",
+          "value": 4.2,
+          "units": "mg/L",
+          "study_type": "Media Exposure Guidelines",
+          "species": null,
+          "source": "DOD"
+        },
+        {
+          "metric": "MEG",
+          "value": 2.8,
+          "units": "mg/L",
+          "study_type": "Media Exposure Guidelines",
+          "species": null,
+          "source": "DOD"
+        },
+        {
+          "metric": "NOEL",
+          "value": 150.0,
+          "units": "mg/kg-day",
+          "study_type": "subchronic",
+          "species": null,
+          "source": "ECOTOX"
+        },
+        {
+          "metric": "LOEL",
+          "value": 150.0,
+          "units": "mg/kg-day",
+          "study_type": "subchronic",
+          "species": null,
+          "source": "ECOTOX"
+        }
+      ]
+    },
+    "exposure": {
+      "status": "ok",
+      "n_records": 2,
+      "product_count": 0,
+      "top_use_categories": {
+        "Biocide": 1
+      }
+    }
+  },
+  "toxicity_endpoints": [
+    {
+      "endpoint": "MEA neurotoxicity phenotype",
+      "endpoint_group": "neurotoxicity",
+      "result_type": "experimental",
+      "label": "MEA activity profile",
+      "n_active_metrics": 14,
+      "n_increase": 12,
+      "n_decrease": 2,
+      "source": "uploaded MEA workbook"
+    }
+  ],
+  "foundation_embedding_neighbors": [
+    {
+      "DTXSID": "DTXSID5035957",
+      "cosine_distance": 0.031174421310424805
+    },
+    {
+      "DTXSID": "DTXSID1023998",
+      "cosine_distance": 0.05100524425506592
+    },
+    {
+      "DTXSID": "DTXSID8020381",
+      "cosine_distance": 0.057709574699401855
+    },
+    {
+      "DTXSID": "DTXSID4020791",
+      "cosine_distance": 0.0658307671546936
+    },
+    {
+      "DTXSID": "DTXSID9020112",
+      "cosine_distance": 0.08011013269424438
+    }
+  ]
+}

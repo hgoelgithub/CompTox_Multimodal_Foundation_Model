@@ -1,0 +1,23 @@
+# Large source data and generated datasets
+*.csv
+*.tsv
+*.gz
+*.sql
+*.parquet
+*.arrow
+data/
+
+# Model outputs
+checkpoints/
+models/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+
+# Local files
+.env
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store

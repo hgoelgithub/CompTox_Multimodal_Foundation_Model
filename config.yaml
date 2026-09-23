@@ -1,0 +1,42 @@
+seed: 42
+
+data:
+  max_compounds: 30000
+  max_assays: 512
+  min_assay_measurements: 50
+  max_smiles_length: 192
+  validation_fraction: 0.10
+  toxcast_active_threshold: 0.90
+
+model:
+  vocab_size: 512
+  d_model: 256
+  n_heads: 8
+  layers: 4
+  feedforward_dim: 768
+  latent_dim: 256
+  dropout: 0.10
+
+training:
+  batch_size: 64
+  epochs: 30
+  learning_rate: 0.0002
+  weight_decay: 0.01
+  smiles_mask_probability: 0.15
+  numeric_mask_probability: 0.15
+  modality_dropout_probability: 0.20
+  patience: 5
+  gradient_clip: 1.0
+
+loss_weights:
+  smiles: 1.00
+  properties: 0.25
+  hitcall: 0.75
+  ac50: 0.25
+  efficacy: 0.15
+  hazard: 0.20
+  exposure: 0.15
+
+evaluation:
+  low_data_fractions: [0.10, 0.25, 0.50, 1.00]
+  nearest_neighbors: 5
