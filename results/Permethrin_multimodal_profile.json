@@ -3,7 +3,7 @@
   "status": "ok",
   "preferred_name": "Permethrin",
   "matched_compound_ids": [
-    "Permethrin_Y1P7"
+    "Permethrin"
   ],
   "base_compound_names": [
     "Permethrin"
@@ -150,11 +150,6 @@
       "concentration_uM": 30.0
     },
     {
-      "metric": "Number of Elecs Participating in Burst - Median",
-      "zscore": -25.4020915,
-      "concentration_uM": 30.0
-    },
-    {
       "metric": "Network IBI Coefficient of Variation",
       "zscore": 15.17981813,
       "concentration_uM": 10.0
@@ -190,11 +185,6 @@
       "concentration_uM": 10.0
     },
     {
-      "metric": "Number of Active Electrodes",
-      "zscore": -8.373767762,
-      "concentration_uM": 10.0
-    },
-    {
       "metric": "Weighted Mean Firing Rate (Hz)",
       "zscore": -7.299027586,
       "concentration_uM": 30.0
@@ -203,10 +193,20 @@
       "metric": "Burst Percentage - Avg",
       "zscore": -6.935793175,
       "concentration_uM": 30.0
+    },
+    {
+      "metric": "Fano Factor",
+      "zscore": -6.838511742,
+      "concentration_uM": 30.0
+    },
+    {
+      "metric": "Synchrony Index",
+      "zscore": -6.676096692,
+      "concentration_uM": 30.0
     }
   ],
   "structure": {
-    "compound_id": "Permethrin_Y1P7",
+    "compound_id": "Permethrin",
     "base_compound_name": "Permethrin",
     "DTXSID": "DTXSID8022292",
     "SMILES": "CC1(C)C(C=C(Cl)Cl)C1C(=O)OCc1cccc(Oc2ccccc2)c1",

@@ -1,20 +1,23 @@
-seed: 42
+# Settings for the cohort builder (step 02) and the pretraining run (step 03).
+# The whole file is stored inside every checkpoint, so a saved model always records how it was trained.
+
+seed: 42                          # random seed for splits, masking and initialisation
 
 data:
-  max_compounds: 30000
-  max_assays: 512
-  min_assay_measurements: 50
-  max_smiles_length: 192
-  validation_fraction: 0.10
-  toxcast_active_threshold: 0.90
+  max_compounds: 30000            # keep at most this many chemicals, ranked by amount of evidence
+  max_assays: 512                 # keep the best-measured ToxCast/Tox21 assays only
+  min_assay_measurements: 50      # ... and only assays measured on at least this many chemicals
+  max_smiles_length: 192          # SMILES longer than this (in characters) are truncated
+  validation_fraction: 0.10       # share of compounds held out for validation (grouped by SMILES)
+  toxcast_active_threshold: 0.90  # hit call at or above this counts as "active"
 
 model:
-  vocab_size: 512
-  d_model: 256
+  vocab_size: 512                 # upper bound on the SMILES character vocabulary
+  d_model: 256                    # transformer width
   n_heads: 8
   layers: 4
   feedforward_dim: 768
-  latent_dim: 256
+  latent_dim: 256                 # size of every modality vector and of the final embedding
   dropout: 0.10
 
 training:
@@ -22,13 +25,13 @@ training:
   epochs: 30
   learning_rate: 0.0002
   weight_decay: 0.01
-  smiles_mask_probability: 0.15
-  numeric_mask_probability: 0.15
-  modality_dropout_probability: 0.20
-  patience: 5
+  smiles_mask_probability: 0.15         # share of SMILES characters hidden
+  numeric_mask_probability: 0.15        # share of observed numeric values hidden
+  modality_dropout_probability: 0.20    # chance that a whole modality is hidden for a compound
+  patience: 5                           # stop after this many epochs without validation improvement
   gradient_clip: 1.0
 
-loss_weights:
+loss_weights:                     # relative weight of each reconstruction objective
   smiles: 1.00
   properties: 0.25
   hitcall: 0.75
@@ -36,7 +39,3 @@ loss_weights:
   efficacy: 0.15
   hazard: 0.20
   exposure: 0.15
-
-evaluation:
-  low_data_fractions: [0.10, 0.25, 0.50, 1.00]
-  nearest_neighbors: 5

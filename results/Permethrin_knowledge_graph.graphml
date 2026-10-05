@@ -322,12 +322,6 @@ BSK_hDFCGF_EGFR</data>
       <data key="d12">54.10348173</data>
       <data key="d13">30.0</data>
     </node>
-    <node id="zscore::Number of Elecs Participating in Burst - Median">
-      <data key="d0">zscore_response</data>
-      <data key="d1">Number of Elecs Participating in Burst - Median</data>
-      <data key="d12">-25.4020915</data>
-      <data key="d13">30.0</data>
-    </node>
     <node id="zscore::Network IBI Coefficient of Variation">
       <data key="d0">zscore_response</data>
       <data key="d1">Network IBI Coefficient of Variation</data>
@@ -363,6 +357,12 @@ BSK_hDFCGF_EGFR</data>
       <data key="d1">Number of Spikes per Network Burst - Median</data>
       <data key="d12">-9.501920928</data>
       <data key="d13">30.0</data>
+    </node>
+    <node id="zscore::Number of Network Bursts">
+      <data key="d0">zscore_response</data>
+      <data key="d1">Number of Network Bursts</data>
+      <data key="d12">8.928811344</data>
+      <data key="d13">10.0</data>
     </node>
     <node id="toxendpoint::0::MEA neurotoxicity phenotype">
       <data key="d0">toxicity_endpoint</data>
@@ -636,47 +636,47 @@ MEA activity profile</data>
       <data key="d26">54.10348173</data>
       <data key="d27">30.0</data>
     </edge>
-    <edge source="chemical::Permethrin" target="zscore::Number of Elecs Participating in Burst - Median" id="e47">
-      <data key="d20">concentration_response</data>
-      <data key="d21">MEA_zscore</data>
-      <data key="d26">-25.4020915</data>
-      <data key="d27">30.0</data>
-    </edge>
-    <edge source="chemical::Permethrin" target="zscore::Network IBI Coefficient of Variation" id="e48">
+    <edge source="chemical::Permethrin" target="zscore::Network IBI Coefficient of Variation" id="e47">
       <data key="d20">concentration_response</data>
       <data key="d21">MEA_zscore</data>
       <data key="d26">15.17981813</data>
       <data key="d27">10.0</data>
     </edge>
-    <edge source="chemical::Permethrin" target="zscore::Number of Spikes" id="e49">
+    <edge source="chemical::Permethrin" target="zscore::Number of Spikes" id="e48">
       <data key="d20">concentration_response</data>
       <data key="d21">MEA_zscore</data>
       <data key="d26">-14.68122866</data>
       <data key="d27">30.0</data>
     </edge>
-    <edge source="chemical::Permethrin" target="zscore::Number of Spikes per Burst (Median) - Avg" id="e50">
+    <edge source="chemical::Permethrin" target="zscore::Number of Spikes per Burst (Median) - Avg" id="e49">
       <data key="d20">concentration_response</data>
       <data key="d21">MEA_zscore</data>
       <data key="d26">-14.04954331</data>
       <data key="d27">30.0</data>
     </edge>
-    <edge source="chemical::Permethrin" target="zscore::Area Under Normalized Cross-Correlation" id="e51">
+    <edge source="chemical::Permethrin" target="zscore::Area Under Normalized Cross-Correlation" id="e50">
       <data key="d20">concentration_response</data>
       <data key="d21">MEA_zscore</data>
       <data key="d26">-10.99947025</data>
       <data key="d27">3.0</data>
     </edge>
-    <edge source="chemical::Permethrin" target="zscore::ISI Coefficient of Variation - Avg" id="e52">
+    <edge source="chemical::Permethrin" target="zscore::ISI Coefficient of Variation - Avg" id="e51">
       <data key="d20">concentration_response</data>
       <data key="d21">MEA_zscore</data>
       <data key="d26">-10.20940889</data>
       <data key="d27">30.0</data>
     </edge>
-    <edge source="chemical::Permethrin" target="zscore::Number of Spikes per Network Burst - Median" id="e53">
+    <edge source="chemical::Permethrin" target="zscore::Number of Spikes per Network Burst - Median" id="e52">
       <data key="d20">concentration_response</data>
       <data key="d21">MEA_zscore</data>
       <data key="d26">-9.501920928</data>
       <data key="d27">30.0</data>
+    </edge>
+    <edge source="chemical::Permethrin" target="zscore::Number of Network Bursts" id="e53">
+      <data key="d20">concentration_response</data>
+      <data key="d21">MEA_zscore</data>
+      <data key="d26">8.928811344</data>
+      <data key="d27">10.0</data>
     </edge>
     <edge source="chemical::Permethrin" target="toxendpoint::0::MEA neurotoxicity phenotype" id="e54">
       <data key="d20">toxicity_or_injury_endpoint</data>

@@ -1,27 +1,26 @@
-"""Step 10 - Transfer learning on MEA neurotoxicity
+"""Step 10b - Baseline models for the MEA task
 
-Question: does the pretrained foundation model help predict a real downstream endpoint better than the
-same architecture trained from scratch, especially when few labels are available?
+Does the pretrained embedding beat ordinary models fitted on raw features? Any transfer claim has to clear
+that bar, so this step fits ridge regression and random forests on simple feature sets, using exactly the
+same labels (`--target`), fixed scaffold split, nested training subsets, seeds and metrics as step 10.
 
-Endpoint (`--target`): by default the number of MEA network metrics a compound perturbs (`n_hits`); alternatively the
-log AC50 of its most potent effect (`min_hit_logac50`) or the median logAC50 over its hits (`median_hit_logac50`).
-The MEA compounds are matched to the cohort through their DTXSID; the same target is used to train and to score.
+Feature sets (all from the cohort table, or computed from the SMILES):
+  physchem          the 16 RDKit descriptors the foundation model receives
+  morgan            2048-bit Morgan (ECFP4) fingerprint
+  morgan_physchem   fingerprint + physchem
+  toxcast_summary   physchem + ToxCast/Tox21 summaries + hazard + exposure
+  all_raw           physchem + every hit-call / AC50 / efficacy column + hazard + exposure
+  emb_sp, emb_all   frozen foundation-model embedding (SMILES+physchem visible / all modalities visible)
+  emb_sp+physchem, emb_all+physchem   the embedding concatenated with the raw physchem columns
 
-Strategies compared (a small task head is always trained):
-  scratch    random initialisation, everything trained (no pretraining)
-  head_only  frozen pretrained model, only the head is trained
-  partial    head + last two transformer layers + fusion block trained
-  full       everything trained, starting from the pretrained weights
+Two diagnostics on the embedding:
+  * models on `emb_*` vs `physchem`: does the embedding hold the information a simple model can use?
+  * `--probe`: how well can each physchem descriptor be recovered from the embedding?
 
-Inputs shown to the model (--inputs): `smiles`, `smiles_physchem` (default; what a brand-new compound
-would have) or `all` (adds ToxCast/Tox21, hazard, exposure). Every strategy uses the same fixed scaffold
-split, and the same nested training subsets and seeds.
-
-Input : checkpoints/comptox_v3_best.pt, data/processed/comptox_v3.parquet, data/mea_processed/*.csv
-Output: results/transfer_mea_metrics.csv (+ _loss_curves.csv, _split.csv)
-Run   : python scripts/10_transfer_learning.py --seeds 5 --epochs 40 --strategies scratch head_only
-
-Read the results with care: only ~200 labelled compounds and one 51-compound test set.
+Input : data/processed/comptox_v3.parquet, data/mea_processed/*.csv, checkpoints/comptox_v3_best.pt
+Output: results/baseline_mea_metrics.csv, results/embedding_probe.csv
+Run   : python scripts/10b_baseline_models.py --seeds 5            # baselines
+        python scripts/10b_baseline_models.py --probe             # descriptor-recovery check
 """
 
 # %%
@@ -29,14 +28,19 @@ import argparse
 import json
 import warnings
 from collections import Counter
-from copy import deepcopy
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 import torch
 import torch.nn as nn
+import yaml
 from scipy.stats import spearmanr
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.impute import SimpleImputer
+from sklearn.linear_model import RidgeCV
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import FunctionTransformer, StandardScaler
 from torch.utils.data import Dataset
 
 # %% [markdown]
@@ -47,20 +51,17 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 COHORT = PROJECT_ROOT / "data" / "processed" / "comptox_v3.parquet"
 MEA_PROCESSED = PROJECT_ROOT / "data" / "mea_processed"
 CHECKPOINT = PROJECT_ROOT / "checkpoints" / "comptox_v3_best.pt"
+CONFIG = PROJECT_ROOT / "config.yaml"
 RESULTS = PROJECT_ROOT / "results"
 
 FRACTIONS = [0.10, 0.25, 0.50, 1.00]
-STRATEGIES = ["scratch", "head_only", "partial", "full"]
-# Which of the six modalities the model may see: physchem, hitcall, ac50, efficacy, hazard, exposure.
-INPUT_SETS = {
-    "smiles": [False] * 6,
-    "smiles_physchem": [True, False, False, False, False, False],
-    "all": [True] * 6,
-}
+FEATURE_SETS = ["physchem", "morgan", "morgan_physchem", "toxcast_summary", "all_raw",
+                "emb_sp", "emb_all", "emb_sp+physchem", "emb_all+physchem"]
+MODELS = ["ridge", "random_forest"]
+INPUT_SETS = {"smiles_physchem": [True, False, False, False, False, False], "all": [True] * 6}
 
 # %% [markdown]
-# ## 2. Model code
-# The pretrained model is loaded from the step-03 checkpoint, so these definitions must match training.
+# ## 2. Model code (only needed to compute the frozen embeddings)
 
 # %% [markdown]
 # ### SMILES tokenizer
@@ -322,6 +323,30 @@ def dataset_for_checkpoint(frame, tokenizer, checkpoint):
                           scalers=checkpoint["scalers"], groups=checkpoint["groups"])
 
 # %% [markdown]
+# ### Encoding compounds for the frozen model
+# `tensors_for` turns a table of compounds into model inputs in one go. Modalities not listed in `keep`
+# are zeroed and marked missing, which is how the model is told "this information is not available".
+# `embed` runs the model on a subset of rows and returns their 256-d embeddings.
+
+# %%
+def tensors_for(frame, tokenizer, checkpoint, keep):
+    dataset = dataset_for_checkpoint(frame, tokenizer, checkpoint)
+    items = [dataset[i] for i in range(len(dataset))]
+    ids = torch.stack([item[0] for item in items])
+    values = [torch.stack([item[1][j] for item in items]) for j in range(6)]
+    masks = [torch.stack([item[2][j] for item in items]) for j in range(6)]
+    for j in range(6):
+        if not keep[j]:
+            values[j] = torch.zeros_like(values[j])
+            masks[j] = torch.zeros_like(masks[j])
+    return ids, values, masks
+
+
+def embed(model, data, idx):
+    ids, values, masks = data
+    return model(ids[idx], [v[idx] for v in values], [m[idx] for m in masks])["embedding"]
+
+# %% [markdown]
 # ## 3. The MEA task
 
 # %% [markdown]
@@ -453,208 +478,238 @@ def regression_metrics(y_true, y_pred):
             "r2": 1 - ss_res / ss_tot if ss_tot > 0 else np.nan}
 
 # %% [markdown]
-# ## 4. Fine-tuning strategies
-# `TaskHead` is a small MLP that maps the 256-d embedding to one predicted number. `configure_finetuning`
-# freezes or unfreezes the backbone according to the strategy: it first freezes everything, then unfreezes
-# only what that strategy trains. The head is always trainable.
-
-# %%
-class TaskHead(nn.Module):
-    def __init__(self, latent_dim=256, output_dim=1):
-        super().__init__()
-        self.net = nn.Sequential(nn.Linear(latent_dim, 128), nn.GELU(), nn.Dropout(0.20), nn.Linear(128, output_dim))
-
-    def forward(self, embedding):
-        return self.net(embedding)
-
-
-def configure_finetuning(model, head, strategy, last_n_layers=2):
-    for parameter in model.parameters():
-        parameter.requires_grad = False
-    if strategy == "partial":
-        for layer in model.transformer.layers[-last_n_layers:]:
-            for parameter in layer.parameters():
-                parameter.requires_grad = True
-        for parameter in model.fusion.parameters():
-            parameter.requires_grad = True
-    elif strategy == "full":
-        for parameter in model.parameters():
-            parameter.requires_grad = True
-    elif strategy != "head_only":
-        raise ValueError("strategy must be head_only, partial or full")
-    for parameter in head.parameters():
-        parameter.requires_grad = True
+# ## 4. Models
 
 # %% [markdown]
-# ### Encoding compounds for the frozen model
-# `tensors_for` turns a table of compounds into model inputs in one go. Modalities not listed in `keep`
-# are zeroed and marked missing, which is how the model is told "this information is not available".
-# `embed` runs the model on a subset of rows and returns their 256-d embeddings.
+# ### Baseline models
+# Two standard regressors, both with median imputation for missing values:
+# * **ridge**: linear, standardised inputs clipped at +-5 standard deviations (a few extreme values
+#   would otherwise let it extrapolate wildly), penalty chosen by leave-one-out CV on the *training
+#   subset only*;
+# * **random forest**: 300 trees, minimum leaf size 2, one third of the features per split.
+# Neither is tuned on the test set. Two more are available: **gbm** (histogram gradient boosting) and **svr** (support-vector regression with an RBF kernel on standardised, clipped inputs and a
+# standardised target).
 
 # %%
-def tensors_for(frame, tokenizer, checkpoint, keep):
-    dataset = dataset_for_checkpoint(frame, tokenizer, checkpoint)
-    items = [dataset[i] for i in range(len(dataset))]
-    ids = torch.stack([item[0] for item in items])
-    values = [torch.stack([item[1][j] for item in items]) for j in range(6)]
-    masks = [torch.stack([item[2][j] for item in items]) for j in range(6)]
-    for j in range(6):
-        if not keep[j]:
-            values[j] = torch.zeros_like(values[j])
-            masks[j] = torch.zeros_like(masks[j])
-    return ids, values, masks
+def make_model(name, seed):
+    if name == "gbm":
+        from sklearn.ensemble import HistGradientBoostingRegressor
+        # median imputation also drops columns that are entirely missing in the training rows, which would break the binning
+        return make_pipeline(SimpleImputer(strategy="median"),
+                             HistGradientBoostingRegressor(max_iter=200, learning_rate=0.05, max_depth=3,
+                                                           min_samples_leaf=5, random_state=seed))
+    if name == "svr":
+        from sklearn.compose import TransformedTargetRegressor
+        from sklearn.svm import SVR
+        inner = make_pipeline(SimpleImputer(strategy="median"), StandardScaler(),
+                              FunctionTransformer(np.clip, kw_args={"a_min": -5.0, "a_max": 5.0}), SVR(C=1.0))
+        return TransformedTargetRegressor(regressor=inner, transformer=StandardScaler())
+    if name == "ridge":
+        return make_pipeline(SimpleImputer(strategy="median"), StandardScaler(),
+                             FunctionTransformer(np.clip, kw_args={"a_min": -5.0, "a_max": 5.0}),
+                             RidgeCV(alphas=np.logspace(-1, 5, 25)))
+    return make_pipeline(SimpleImputer(strategy="median"),
+                         RandomForestRegressor(n_estimators=300, min_samples_leaf=2, max_features=0.33,
+                                               n_jobs=4, random_state=seed))
 
 
-def embed(model, data, idx):
-    ids, values, masks = data
-    return model(ids[idx], [v[idx] for v in values], [m[idx] for m in masks])["embedding"]
+def morgan_matrix(smiles, radius=2, n_bits=2048):
+    """ECFP4-style Morgan fingerprint bits (unparseable SMILES give all zeros)."""
+    from rdkit import Chem, RDLogger
+    from rdkit.Chem import rdFingerprintGenerator
+    RDLogger.DisableLog("rdApp.*")
+    generator = rdFingerprintGenerator.GetMorganGenerator(radius=radius, fpSize=n_bits)
+    out = np.zeros((len(smiles), n_bits), dtype=np.float32)
+    for i, s in enumerate(smiles):
+        mol = Chem.MolFromSmiles(str(s))
+        if mol is not None:
+            out[i] = generator.GetFingerprintAsNumPy(mol)
+    return out
 
 # %% [markdown]
-# ## 5. Training and scoring one configuration
-# `fit_and_score` trains one strategy on the training subset and reports RMSE, Spearman and R^2 on the fixed
-# test compounds:
-# * the target is standardised with the training subset's mean and standard deviation, and predictions are
-#   converted back to hit counts before scoring;
-# * `head_only` embeds the compounds once and trains only the head (fast);
-# * the other strategies push every batch through the model. The from-scratch model uses a higher backbone
-#   learning rate (1e-3) than the pretrained ones (1e-4);
-# * the mean training loss per epoch is returned, to check that training has converged.
+# ## 5. Feature sets
+# `toxcast_summary` compresses the ~1,500 bioactivity columns into five numbers per compound: how many
+# assays were measured, how many were active (hit call >= 0.9), the active fraction, and the median log10
+# AC50 and efficacy. The `emb_*` sets are the frozen foundation-model embeddings, computed once per
+# compound with either only SMILES+physchem visible or all modalities visible (the same masking as step 10).
 
 # %%
-def fit_and_score(strategy, pretrained, checkpoint, tokenizer, data, y, train_idx, test_idx, epochs, seed, batch_size=32):
-    torch.manual_seed(seed)
-    y_mean, y_std = float(y[train_idx].mean()), float(y[train_idx].std() or 1.0)
-    target = torch.tensor((y - y_mean) / y_std, dtype=torch.float32)
-    model = build_model(checkpoint, tokenizer) if strategy == "scratch" else deepcopy(pretrained)
-    head = TaskHead(checkpoint["config"]["model"]["latent_dim"])
-    configure_finetuning(model, head, "full" if strategy == "scratch" else strategy)
+def toxcast_summary(frame, threshold):
+    hit = frame[[c for c in frame if c.startswith("biohit__")]].to_numpy(float)
+    ac50 = frame[[c for c in frame if c.startswith("bioac50__")]].to_numpy(float)
+    efficacy = frame[[c for c in frame if c.startswith("bioeff__")]].to_numpy(float)
+    measured = np.isfinite(hit).sum(axis=1)
+    active = np.nansum(np.where(np.isfinite(hit), hit >= threshold, 0), axis=1)
+    with np.errstate(all="ignore"):
+        fraction = np.where(measured > 0, active / np.maximum(measured, 1), np.nan)
 
-    if strategy == "head_only":  # frozen backbone: embed once, train only the head
-        model.eval()
-        with torch.no_grad():
-            z_train, z_test = embed(model, data, train_idx), embed(model, data, test_idx)
-        groups = [{"params": head.parameters(), "lr": 1e-3}]
-    else:
-        backbone = [p for p in model.parameters() if p.requires_grad]
-        groups = [{"params": head.parameters(), "lr": 1e-3},
-                  {"params": backbone, "lr": 1e-3 if strategy == "scratch" else 1e-4}]
-    optimizer = torch.optim.AdamW(groups, weight_decay=0.01)
-    loss_fn = nn.MSELoss()
+    def row_median(a):
+        return np.array([np.nanmedian(r) if np.isfinite(r).any() else np.nan for r in a])
 
-    losses = []  # mean training loss per epoch (standardised units)
-    n = len(train_idx)
-    for epoch in range(epochs):
-        head.train()
-        order = np.random.RandomState(seed * 1000 + epoch).permutation(n)
-        epoch_loss, batches = 0.0, 0
-        for start in range(0, n, batch_size):
-            batch = order[start:start + batch_size]
-            if len(batch) < 2:
-                continue
-            optimizer.zero_grad()
-            if strategy == "head_only":
-                pred = head(z_train[batch]).squeeze(-1)
-            else:
-                model.train()
-                pred = head(embed(model, data, train_idx[batch])).squeeze(-1)
-            loss = loss_fn(pred, target[train_idx[batch]])
-            loss.backward()
-            optimizer.step()
-            epoch_loss += float(loss)
-            batches += 1
-        losses.append(epoch_loss / max(batches, 1))
+    return np.column_stack([measured, active, fraction, row_median(ac50), row_median(efficacy)])
 
-    head.eval()
+
+def foundation_embeddings(frame, checkpoint_path):
+    """Frozen embeddings with SMILES+physchem visible (emb_sp) and with all modalities visible (emb_all)."""
+    model, tokenizer, checkpoint = load_checkpoint(checkpoint_path)
     model.eval()
+    everyone = np.arange(len(frame))
+    out = {}
     with torch.no_grad():
-        z = z_test if strategy == "head_only" else embed(model, data, test_idx)
-        pred = head(z).squeeze(-1).numpy() * y_std + y_mean
-    return regression_metrics(y[test_idx], pred), losses
+        for name, key in (("emb_sp", "smiles_physchem"), ("emb_all", "all")):
+            data = tensors_for(frame, tokenizer, checkpoint, INPUT_SETS[key])
+            out[name] = embed(model, data, everyone).numpy()
+    return out
+
+
+def build_features(frame, threshold, embeddings=None):
+    physchem = frame[[c for c in PROPERTY if c in frame]].to_numpy(float)
+    context = frame[[c for c in HAZARD + EXPOSURE if c in frame]].to_numpy(float)
+    bioactivity = frame[[c for c in frame if c.startswith(("biohit__", "bioac50__", "bioeff__"))]].to_numpy(float)
+    fingerprint = morgan_matrix(frame["smiles"].tolist())
+    features = {
+        "physchem": physchem,
+        "morgan": fingerprint,
+        "morgan_physchem": np.hstack([fingerprint, physchem]),
+        "toxcast_summary": np.hstack([physchem, toxcast_summary(frame, threshold), context]),
+        "all_raw": np.hstack([physchem, bioactivity, context]),
+    }
+    for name, z in (embeddings or {}).items():
+        features[name] = z
+        features[name + "+physchem"] = np.hstack([z, physchem])
+    return features
 
 # %% [markdown]
-# ## 6. Run the experiment grid
-# For every seed, fraction and strategy: train on the nested training subset, score on the fixed test set,
-# and print a progress line that includes the loss slope over the last 20% of epochs (a slope still clearly
-# below zero means training had not converged; use more epochs). The result files are rewritten after
-# **every** finished run, so an interrupted job keeps its work; `resume=True` skips runs already saved.
-# Also reported is a "predict the training mean" baseline.
+# ## 6. Run the baselines
+# For every seed, fraction, feature set and model: fit on the nested training subset, score on the fixed test
+# set. Results are saved after every fit, so an interrupted run keeps its work (`resume=True` continues it).
+# A "predict the training mean" row is included as the floor any real model must beat.
 
 # %%
-def run_transfer(strategies=STRATEGIES, fractions=FRACTIONS, inputs="smiles_physchem", seeds=3, epochs=30,
-                 test_fraction=0.25, split_seed=0, checkpoint_path=CHECKPOINT, output=None, resume=False, target="n_hits"):
-    torch.set_num_threads(4)
-    pretrained, tokenizer, checkpoint = load_checkpoint(checkpoint_path)
+def run_baselines(seeds=5, fractions=FRACTIONS, features=FEATURE_SETS, models=MODELS, test_fraction=0.25,
+                  split_seed=0, checkpoint_path=CHECKPOINT, output=None, resume=False, target="n_hits"):
+    warnings.filterwarnings("ignore", message="(?s).*At least one non-missing value.*")  # empty columns are dropped
+    threshold = yaml.safe_load(CONFIG.read_text(encoding="utf-8"))["data"]["toxcast_active_threshold"]
     frame, y, train_pool, test_idx = prepare_mea_task(COHORT, test_fraction, split_seed, target)
-    if len(frame) < 30:
-        raise ValueError("Too few labelled compounds for a meaningful transfer test.")
-    data = tensors_for(frame, tokenizer, checkpoint, INPUT_SETS[inputs])
+    embeddings = foundation_embeddings(frame, checkpoint_path) if any(f.startswith("emb_") for f in features) else None
+    matrices = build_features(frame, threshold, embeddings)
+    print("Feature sets:", {name: matrices[name].shape[1] for name in features})
 
     suffix = "" if target == "n_hits" else f"_{target}"
-    output = Path(output) if output else RESULTS / f"transfer_mea_metrics{suffix}.csv"
+    output = Path(output) if output else RESULTS / f"baseline_mea_metrics{suffix}.csv"
     output.parent.mkdir(parents=True, exist_ok=True)
-    curves_path = output.with_name(output.stem + "_loss_curves.csv")
-    split = np.where(np.isin(np.arange(len(frame)), test_idx), "test", "train_pool")
-    pd.DataFrame({"DTXSID": frame["DTXSID"], "set": split}).to_csv(output.with_name(output.stem + "_split.csv"), index=False)
-
-    rows, curves, done = [], [], set()
+    rows, done = [], set()
     if resume and output.exists():
         rows = pd.read_csv(output).to_dict("records")
-        curves = pd.read_csv(curves_path).to_dict("records") if curves_path.exists() else []
-        done = {(int(r["seed"]), r["strategy"], float(r["fraction"])) for r in rows}
+        done = {(int(r["seed"]), r["model"], r["features"], float(r["fraction"])) for r in rows}
         print(f"Resuming: {len(done)} finished runs found in {output.name}")
     elif output.exists():
         print(f"WARNING: {output.name} exists and will be overwritten (use resume=True to continue it).")
 
-    def save_progress():
-        pd.DataFrame(rows).to_csv(output, index=False)
-        pd.DataFrame(curves).to_csv(curves_path, index=False)
-
     for seed in range(seeds):
-        if (seed, "mean_baseline", 1.0) not in done:
+        if (seed, "mean_baseline", "none", 1.0) not in done:
             baseline = np.full(len(test_idx), y[train_pool].mean())
-            rows.append({"seed": seed, "strategy": "mean_baseline", "fraction": 1.0, "n_train": len(train_pool),
-                         "n_test": len(test_idx), **regression_metrics(y[test_idx], baseline)})
+            rows.append({"seed": seed, "model": "mean_baseline", "features": "none", "fraction": 1.0,
+                         "n_train": len(train_pool), "n_test": len(test_idx), **regression_metrics(y[test_idx], baseline)})
         for fraction in fractions:
             train_idx = training_subset(train_pool, seed, fraction)
-            for strategy in strategies:
-                if (seed, strategy, float(fraction)) in done:
-                    continue
-                metrics, losses = fit_and_score(strategy, pretrained, checkpoint, tokenizer, data, y,
-                                                train_idx, test_idx, epochs, seed)
-                rows.append({"seed": seed, "strategy": strategy, "fraction": fraction, "n_train": len(train_idx),
-                             "n_test": len(test_idx), **metrics})
-                curves += [{"seed": seed, "strategy": strategy, "fraction": fraction, "epoch": e + 1, "train_loss": l}
-                           for e, l in enumerate(losses)]
-                tail = losses[-max(1, len(losses) // 5):]
-                slope = (tail[-1] - tail[0]) / max(len(tail) - 1, 1)
-                print(f"seed={seed} fraction={fraction:>4.0%} {strategy:<9} rmse={metrics['rmse']:.3f} "
-                      f"spearman={metrics['spearman']:.3f} | train_loss end={losses[-1]:.3f} "
-                      f"last-20%-slope/epoch={slope:+.4f}", flush=True)
-                save_progress()
-    save_progress()
+            for feature_name in features:
+                X = matrices[feature_name]
+                for model_name in models:
+                    if (seed, model_name, feature_name, float(fraction)) in done:
+                        continue
+                    model = make_model(model_name, seed).fit(X[train_idx], y[train_idx])
+                    metrics = regression_metrics(y[test_idx], model.predict(X[test_idx]))
+                    rows.append({"seed": seed, "model": model_name, "features": feature_name, "fraction": fraction,
+                                 "n_train": len(train_idx), "n_test": len(test_idx), **metrics})
+                    print(f"seed={seed} fraction={fraction:>4.0%} {model_name:<13} {feature_name:<16} "
+                          f"rmse={metrics['rmse']:.3f} spearman={metrics['spearman']:.3f}", flush=True)
+                    pd.DataFrame(rows).to_csv(output, index=False)
     result = pd.DataFrame(rows)
+    result.to_csv(output, index=False)
+    summary = result.groupby(["model", "features", "fraction"])[["rmse", "spearman", "r2"]].agg(["mean", "std"]).round(3)
     print("\nMean / std over seeds (test = fixed scaffold-held-out compounds):")
-    print(result.groupby(["strategy", "fraction"])[["rmse", "spearman", "r2"]].agg(["mean", "std"]).round(3).to_string())
+    print(summary.to_string())
+    print("Saved:", output)
+    return result
+
+# %% [markdown]
+# ## 7. Diagnostic: can the physchem descriptors be recovered from the embedding?
+# If the embedding kept the physchem information, a simple model should be able to predict each descriptor
+# back from the embedding alone. Here ridge and a random forest are fitted on the checkpoint's *training*
+# compounds (a 3,000-compound sample) and scored on its held-out *validation* compounds. R^2 close to 1 means
+# the information is retained; near 0 means it is lost. (Formal charge and radical-electron count are almost
+# always zero in the cohort, so they carry nothing to recover.)
+
+# %%
+def embed_batched(model, data, batch=256):
+    ids, values, masks = data
+    chunks = []
+    with torch.no_grad():
+        for start in range(0, len(ids), batch):
+            s = slice(start, start + batch)
+            chunks.append(model(ids[s], [v[s] for v in values], [m[s] for m in masks])["embedding"].numpy())
+    return np.vstack(chunks)
+
+
+def run_probe(models=MODELS, n_train=3000, checkpoint_path=CHECKPOINT, output=None):
+    model, tokenizer, checkpoint = load_checkpoint(checkpoint_path)
+    model.eval()
+    cohort = pd.read_parquet(COHORT)
+    ids = cohort["DTXSID"].astype(str)
+    rng = np.random.RandomState(0)
+    train_ids = rng.choice(np.array(checkpoint["train_ids"]), size=min(n_train, len(checkpoint["train_ids"])), replace=False)
+    train = cohort[ids.isin(set(train_ids))].reset_index(drop=True)
+    valid = cohort[ids.isin(set(checkpoint["validation_ids"]))].reset_index(drop=True)
+    print(f"Probe: fit on {len(train)} training compounds, score on {len(valid)} held-out validation compounds")
+
+    rows = []
+    for label, key in (("emb_sp", "smiles_physchem"), ("emb_all", "all")):
+        z_train = embed_batched(model, tensors_for(train, tokenizer, checkpoint, INPUT_SETS[key]))
+        z_valid = embed_batched(model, tensors_for(valid, tokenizer, checkpoint, INPUT_SETS[key]))
+        for column in [c for c in PROPERTY if c in cohort]:
+            y_train, y_valid = train[column].to_numpy(float), valid[column].to_numpy(float)
+            fit_ok, test_ok = np.isfinite(y_train), np.isfinite(y_valid)
+            if fit_ok.sum() < 50 or test_ok.sum() < 20 or np.std(y_valid[test_ok]) == 0:
+                continue
+            for model_name in models:
+                estimator = make_model(model_name, 0).fit(z_train[fit_ok], y_train[fit_ok])
+                pred = estimator.predict(z_valid[test_ok])
+                ss_res = float(((y_valid[test_ok] - pred) ** 2).sum())
+                ss_tot = float(((y_valid[test_ok] - y_valid[test_ok].mean()) ** 2).sum())
+                rows.append({"embedding": label, "model": model_name, "descriptor": column,
+                             "r2": 1 - ss_res / ss_tot, "n_valid": int(test_ok.sum())})
+        print("finished", label, flush=True)
+    result = pd.DataFrame(rows)
+    output = Path(output) if output else RESULTS / "embedding_probe.csv"
+    output.parent.mkdir(parents=True, exist_ok=True)
+    result.to_csv(output, index=False)
+    print("\nHeld-out R^2 for recovering each descriptor from the embedding (1.0 = perfect):")
+    print(result.pivot_table(index="descriptor", columns=["embedding", "model"], values="r2").round(3).to_string())
     print("Saved:", output)
     return result
 
 # %% Command line
 def main():
-    parser = argparse.ArgumentParser(description="Transfer-learning comparison on the MEA endpoint.")
-    parser.add_argument("--strategies", nargs="+", choices=STRATEGIES, default=STRATEGIES)
+    parser = argparse.ArgumentParser(description="Baseline models for the MEA task, and an embedding diagnostic.")
+    parser.add_argument("--probe", action="store_true", help="run the descriptor-recovery diagnostic and exit")
+    parser.add_argument("--probe-train", type=int, default=3000, help="training compounds used to fit the probe")
+    parser.add_argument("--models", nargs="+", choices=MODELS, default=MODELS)
+    parser.add_argument("--features", nargs="+", choices=FEATURE_SETS, default=FEATURE_SETS)
     parser.add_argument("--fractions", nargs="+", type=float, default=FRACTIONS)
-    parser.add_argument("--inputs", choices=list(INPUT_SETS), default="smiles_physchem")
-    parser.add_argument("--target", choices=MEA_TARGETS, default="n_hits", help="what to predict (see the docstring)")
-    parser.add_argument("--seeds", type=int, default=3)
-    parser.add_argument("--epochs", type=int, default=30)
+    parser.add_argument("--target", choices=MEA_TARGETS, default="n_hits", help="what to predict: hit count or AC50-based potency")
+    parser.add_argument("--seeds", type=int, default=5)
     parser.add_argument("--test-fraction", type=float, default=0.25)
-    parser.add_argument("--split-seed", type=int, default=0, help="tie-break seed for the fixed split")
+    parser.add_argument("--split-seed", type=int, default=0, help="must match step 10's --split-seed")
     parser.add_argument("--checkpoint", type=Path, default=CHECKPOINT)
     parser.add_argument("--output", type=Path)
     parser.add_argument("--resume", action="store_true", help="skip runs already saved in --output")
     args = parser.parse_args()
-    run_transfer(args.strategies, args.fractions, args.inputs, args.seeds, args.epochs, args.test_fraction,
-                 args.split_seed, args.checkpoint, args.output, args.resume, args.target)
+    if args.probe:
+        run_probe(args.models, args.probe_train, args.checkpoint, args.output)
+    else:
+        run_baselines(args.seeds, args.fractions, args.features, args.models, args.test_fraction,
+                      args.split_seed, args.checkpoint, args.output, args.resume, args.target)
 
 
 if __name__ == "__main__":
